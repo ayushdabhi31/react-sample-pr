@@ -15,6 +15,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Post PR Comment
-        uses: ayushdabhi31/Build_Url@6.0
+        uses: ayushdabhi31/Build_Url@7.0
         with:
             github-token: ${{ secrets.GITHUB_TOKEN }}
