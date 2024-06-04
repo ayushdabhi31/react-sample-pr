@@ -23,7 +23,7 @@ jobs:
         run: npm install
       
       - name: Install zip
-        run: sudo apt-get install -y zip
+        run: apt-get install -y zip
 
       - name: Build project & zip
         run: npm run build && zip -r build.zip build
@@ -31,9 +31,8 @@ jobs:
       - name: Create a Release and Upload build.zip
         id: create_release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-        
           # Get the pull request number
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           TAG="pr-${PR_NUMBER}-build"
@@ -43,9 +42,9 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             -d "{\"tag_name\": \"$TAG\", \"name\": \"$TAG\", \"body\": \"Release for PR #$PR_NUMBER\"}" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/releases")
-           
-          # verify release response
-            echo "$release_response"
+          
+          # Verify release response
+          echo "$release_response"
 
           # Extract the upload URL for the release
           upload_url=$(echo "$release_response" | jq --raw-output .upload_url | sed "s/{?name,label}//")
@@ -76,9 +75,8 @@ jobs:
 
       - name: Post PR Comment with build.zip Link
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-        
           # Get the pull request number
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           DOWNLOAD_URL=${{ steps.create_release.outputs.download_url }}
