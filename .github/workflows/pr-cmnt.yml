@@ -16,9 +16,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-        
+
       - name: Build and Comment
         uses: ayushdabhi31/Build_Url@23.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          github-event-path: ${{ github.event_path }}
