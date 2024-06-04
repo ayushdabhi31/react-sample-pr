@@ -31,5 +31,5 @@ jobs:
       - name: React app build.zip PR comment
         uses: ayushdabhi31/Build_Url@22.0
         with:
-          github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
         
