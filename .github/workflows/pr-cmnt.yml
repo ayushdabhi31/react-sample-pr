@@ -18,7 +18,6 @@ jobs:
           node-version: '20'
 
       - name: Build and Comment
-        uses: ayushdabhi31/Build_Url@25.0
+        uses: ayushdabhi31/Build_Url@26.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          github-event-path: ${{ github.event_path }}
