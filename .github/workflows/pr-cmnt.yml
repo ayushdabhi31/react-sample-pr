@@ -1,35 +1,19 @@
-name: Post Build Zip
+name: Build and Comment on PR
 
 on:
   pull_request:
-     types: [opened, synchronize, reopened]
-     branches:
-        - main
+    types: [opened, synchronize, reopened]
 
 jobs:
-  testing-action:
+  build-and-comment:
     runs-on: ubuntu-latest
-    permissions:
-        issues: write
-        pull-requests: write
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4.0.2
-
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Install zip
-        run: sudo apt-get install -y zip
-
-      - name: Build project & zip
-        run: npm run build && zip -r build.zip build
-
-      - name: React app build.zip PR comment
-        uses: ayushdabhi31/Build_Url@22.0
+        
+      - name: Build and Comment
+        uses: ayushdabhi31/Build_Url@23.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-        
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
